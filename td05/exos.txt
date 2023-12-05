@@ -1,0 +1,49 @@
+def creer_arbre(racine, g, d):
+    return (racine, g, d)
+
+def vide():
+    return None
+
+def feuille(r):
+    return creer_arbre(r, vide(), vide())
+
+def racine(a):
+    return a[0]
+
+def gauche(a):
+    return a[1]
+
+def droite(a):
+    return a[2]
+
+def est_vide(a):
+    return a == None
+
+def est_feuille(a):
+    return not est_vide(a) and est_vide(gauche(a)) and est_vide(droite(a)) 
+
+def appartient(arbre, val):
+    if est_vide(arbre):
+        return False
+    if racine(arbre) == val:
+        return True
+    return gauche(arbre) or droite(arbre)
+
+def feuille_gauche(arbre):
+    assert not est_vide(arbre)
+    if est_feuille(arbre):
+        return arbre
+    return feuille_gauche(gauche(arbre))
+
+
+def test():
+    print("test...")
+    a = creer_arbre(0, feuille(-1), creer_arbre(1, feuille(0.5), feuille(1.5)))
+    
+    assert racine(a) == 0
+    assert gauche(a) == -1
+    assert droite(a) == creer_arbre(1, 0.5, 1.5)
+    assert est_vide(None)
+    assert est_feuille(gauche())
+    
+    print("  OK")
